@@ -1,23 +1,33 @@
+
 pipeline {
     agent any
 
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                echo 'Source code checked out from GitHub'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm ci'
+                bat 'npm install'
             }
         }
 
         stage('Build React App') {
             steps {
-                sh 'npm run build'
+                bat 'npm run build'
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Netflix Clone build completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed. Check Console Output.'
         }
     }
 }
