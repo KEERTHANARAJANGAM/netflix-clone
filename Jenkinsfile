@@ -20,11 +20,17 @@ pipeline {
                 bat 'npm run build'
             }
         }
+
+        stage('Build Docker Image') {
+            steps {
+                bat 'docker build -t netflix-clone:1.0 .'
+            }
+        }
     }
 
     post {
         success {
-            echo 'Netflix Clone build completed successfully!'
+            echo 'React build and Docker image creation succeeded!'
         }
         failure {
             echo 'Pipeline failed. Check Console Output.'
